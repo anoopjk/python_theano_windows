@@ -17,3 +17,48 @@ DeepLearning part
 theano installation 
 - follow the link look at windows section
 http://deeplearning.net/software/theano/install.html
+
+the following is the important section you need to look into
+http://www.deeplearning.net/software/theano/install.html#bleeding-edge-install-instructions
+
+Note:- 
+The tests should be run with the configuration option device set to cpu (default). If you need to change this value, you can do that by setting the THEANO_FLAGS environment variable, by prefixing the theano-nose command with THEANO_FLAGS=device=cpu. If you have a GPU, it will automatically be used to run GPU-related tests.
+If you want GPU-related tests to run on a specific GPU device, and not the default one, you should use init_gpu_device. For instance: THEANO_FLAGS=device=cpu,init_gpu_device=gpu1.
+See config – Theano Configuration for more information on how to change these configuration options.
+
+########################################################################################################################################
+Download the theano package - use the following commands in your command prompt, (make sure you have git installed for windows)
+git clone git://github.com/Theano/Theano.git
+cd Theano
+python setup.py develop
+
+######################################################################################################################################
+Download the precompiled libopenblas.dll from openblas/v0.2.14/ 
+Download mingw64_dll.zip as well
+(i chose OpenBLAS-v0.2.14-Win64-int32.zip.)
+
+next extract the dll in bin folder of the zip to C:\openblas, extract all dll's in mingw64 to the same location
+
+finally set blas.ldflags=-LC:\\openblas -lopenblas in THEANO_FLAGS
+#####################################################################################################################################
+#run the following code to test the performance of theano, it should be equal to numpy performance
+
+import numpy as np
+import time
+import theano
+
+print('blas.ldflags=', theano.config.blas.ldflags)
+
+A = np.random.rand(1000, 10000).astype(theano.config.floatX)
+B = np.random.rand(10000, 1000).astype(theano.config.floatX)
+np_start = time.time()
+AB = A.dot(B)
+np_end = time.time()
+X, Y = theano.tensor.matrices('XY')
+mf = theano.function([X, Y], X.dot(Y))
+t_start = time.time()
+tAB = mf(A, B)
+t_end = time.time()
+print("NP time: %f[s], theano time: %f[s] (times should be close when run on CPU!)" % (
+np_end - np_start, t_end - t_start))
+print("Result difference: %f" % (np.abs(AB - tAB).max(), ))
