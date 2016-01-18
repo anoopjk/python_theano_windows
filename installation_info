@@ -1,0 +1,19 @@
+Python tutorial- from stanford's course 
+http://cs231n.github.io/python-numpy-tutorial/
+############################################################################################################
+Follow this tutorial for running opencv-Anaconda2(python) on windows machines.
+http://mathalope.co.uk/2015/05/07/opencv-python-how-to-install-opencv-python-package-to-anaconda-windows/
+
+#############################################################################################################
+
+Anaconda2 is a python package with lot of other dependencies
+https://www.continuum.io/downloads -go to this link and download windows python 2.7 64bit installer
+
+note: there is an inbuilt console for python in Anaconda package, Spyder.
+you can type 'spyder' in the start search or in the command prompt and a window will open 
+
+###########################################################################################################
+DeepLearning part
+theano installation 
+- follow the link look at windows section
+http://deeplearning.net/software/theano/install.html
